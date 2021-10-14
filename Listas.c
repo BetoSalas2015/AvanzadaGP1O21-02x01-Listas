@@ -12,6 +12,22 @@ struct Nodo
 
 typedef struct Nodo nodo;
 
+nodo *raiz = NULL;				// Creamos la lista vacia
+
+void insert(char dato)
+{
+	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
+	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
+	if( nuevo == NULL )			//  Error: Overflow!
+	{
+		printf("Error - Overflow: Ya no hay memoria disponible. \n");
+		system("Pause");
+		return 2;          
+	}
+	nuevo -> info = dato;
+	nuevo -> sig = NULL;
+}
+
 int main()
 {
 	nodo caja;
