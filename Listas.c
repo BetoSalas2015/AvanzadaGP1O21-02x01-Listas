@@ -33,7 +33,11 @@ void insert(char dato)		// dato = 'b'
 	else						//  Falso: la lista no esta vacía (al menos tiene 1 nodo)
 	{
 		nodo *ultimo = raiz;
-		if( sig == NULL)				//  ¿Es el ultimo nodo?
+		while( ultimo->sig != NULL)		//  ¿Es el ultimo nodo?
+		{							//  Verdadero: no es el ultimo nodo
+			 ultimo = ultimo -> sig;	// Avanzo al diguiente nodo...
+		}
+		ultimo -> sig = nuevo;
 	}
 }
 
