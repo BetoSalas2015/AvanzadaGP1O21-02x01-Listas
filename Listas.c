@@ -1,4 +1,4 @@
-// Sesion 25 - 13/10/2021
+// Sesion 28 - 20/10/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
@@ -14,7 +14,7 @@ typedef struct Nodo nodo;
 
 nodo *raiz = NULL;				// Creamos la lista vacia
 
-void insert(char dato)
+void insert(char dato)		// dato = 'b'
 {
 	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
 	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
@@ -22,10 +22,19 @@ void insert(char dato)
 	{
 		printf("Error - Overflow: Ya no hay memoria disponible. \n");
 		system("Pause");
-		return 2;          
+		return;          
 	}
-	nuevo -> info = dato;
-	nuevo -> sig = NULL;
+	nuevo -> info = dato;		//  Guardamos la información en el nodo
+	nuevo -> sig = NULL;		//  No hay nodo delante..
+	if( raiz == NULL )			//  ¿La lista está vacía?
+	{							//  Verdadero: la lista está vacia
+		raiz = nuevo;
+	}
+	else						//  Falso: la lista no esta vacía (al menos tiene 1 nodo)
+	{
+		nodo *ultimo = raiz;
+		if( sig == NULL)				//  ¿Es el ultimo nodo?
+	}
 }
 
 int main()
