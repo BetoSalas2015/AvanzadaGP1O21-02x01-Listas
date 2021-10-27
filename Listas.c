@@ -1,8 +1,14 @@
-// Sesion 29 - 21/10/2021
+// Sesion 30 - 26/10/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
 #include <malloc.h>				//  Para la asignación (memory allocation) dinamica de memoria
+
+//  Prototipos					//  Avisarle al compilador que las funciones existen
+void insert(char dato);
+void insertn(char dato, int n);
+void insert1(char dato);
+void imprimeLista();
 
 struct Nodo 
 { 
@@ -14,7 +20,7 @@ typedef struct Nodo nodo;
 
 nodo *raiz = NULL;				// Creamos la lista vacia
 
-void insert2(char dato)		// dato = 'c'
+void insert(char dato)		// dato = 'c'
 {
 	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
 	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
@@ -40,6 +46,45 @@ void insert2(char dato)		// dato = 'c'
 		ultimo -> sig = nuevo;
 	}
 }
+
+void insertn(char dato, int n)		// dato = 'k' n = 5
+{
+	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
+	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
+	if( nuevo == NULL )			//  Error: Overflow!
+	{
+		printf("Error - Overflow: Ya no hay memoria disponible. \n");
+		system("Pause");
+		return;          
+	}
+	nuevo -> info = dato;		//  Guardamos la información en el nodo
+	nuevo -> sig = NULL;		//  No hay nodo delante..
+	if( raiz == NULL )			//  ¿La lista está vacía?
+	{							//  Verdadero: la lista está vacia
+		raiz = nuevo;
+	}
+	if(n == 1)					//  Insertamos en la primera posición si n = 1
+	{
+		nodo *ultimo = raiz;
+		raiz = nuevo;
+		raiz -> sig = ultimo;
+	}
+	else						//  Falso: la lista no esta vacía (al menos tiene 1 nodo)
+	{
+		int pos = 1;
+		nodo *anterior = raiz;
+		nodo *siguiente = NULL;
+		while(pos != n - 1)
+		{
+			anterior = anterior->sig;
+			pos++;
+		}
+		siguiente = anterior -> sig;
+		anterior ->sig = nuevo;
+		nuevo ->sig = siguiente;
+	}
+}
+
 
 void insert1(char dato)		
 {
@@ -80,26 +125,34 @@ int main()
 {
 	imprimeLista();
 
-	insert1('R');
-	insert1('o');
-	insert1('b');
-	insert1('e');
-	insert1('r');
-	insert1('t');
-	insert1('o');
+	insert('R');
+	insert('o');
+	insert('b');
+	insert('e');
+	insert('r');
+	insert('t');
+	insert('o');
 
 	imprimeLista();
 
-	insert1(' ');
-	insert1('S');
-	insert1('a');
-	insert1('l');
-	insert1('a');
-	insert1('z');
-	insert1('a');
-	insert1('r');
+	insert(' ');
+	insert('S');
+	insert('a');
+	insert('l');
+	insert('a');
+	insert('z');
+	insert('a');
+	insert('r');
 
     imprimeLista();
+
+	insertn('m',2);
+
+	imprimeLista();
+
+	insertn('k', 50);
+
+	imprimeLista();
 
 	system("pause");
 	return 1;
