@@ -1,4 +1,4 @@
-// Sesion 31 - 27/10/2021
+// Sesion 32 - 28/10/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
@@ -140,11 +140,17 @@ char remueven(int n)
 		{
 			int pos = 1;
 			anterior = raiz;
-			while((pos != n - 1) )
+			while((pos != n - 1))
 			{
 				anterior = anterior->sig;
 				pos++;
+				if(anterior->sig == NULL )
+				{
+					printf("Error! No se puede eliminar el elemento %d\n", n);
+					return '\0';
+				}
 			}
+			
 			elimina = anterior ->sig;
 			siguiente = elimina->sig;
 			anterior ->sig = siguiente;
@@ -152,6 +158,27 @@ char remueven(int n)
 			free(elimina);
 			return dato;
 		}
+	} 
+	else
+	{
+		printf("Error - UnderFlow: No hay elementos en la lista. \n"); //  Error: Underflow!
+		system("Pause");
+		return;   
+	}
+}
+
+char remueve1()
+{
+	if(raiz != NULL)
+	{
+		nodo *siguiente = NULL, *anterior = NULL, *elimina = NULL;
+		char dato;
+
+		elimina = raiz;
+		raiz = raiz -> sig;
+		dato = elimina -> info;
+		free(elimina);
+		return dato;
 	} 
 	else
 	{
@@ -194,7 +221,8 @@ int main()
 
 	imprimeLista();
 
-	remueven(9);
+	remueve1();
+	remueve1();
 
 	imprimeLista();
 
