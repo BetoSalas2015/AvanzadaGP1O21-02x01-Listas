@@ -1,4 +1,4 @@
-// Sesion 30 - 26/10/2021
+// Sesion 31 - 27/10/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
@@ -74,7 +74,7 @@ void insertn(char dato, int n)		// dato = 'k' n = 5
 		int pos = 1;
 		nodo *anterior = raiz;
 		nodo *siguiente = NULL;
-		while(pos != n - 1)
+		while((pos != n - 1) && (anterior->sig != NULL) )
 		{
 			anterior = anterior->sig;
 			pos++;
@@ -121,6 +121,46 @@ void imprimeLista()
 	putchar('\n');
 }
 
+
+char remueven(int n)
+{
+	if(raiz != NULL)
+	{
+		nodo *siguiente = NULL, *anterior = NULL, *elimina = NULL;
+		char dato;
+		if(n == 1)
+		{
+			elimina = raiz;
+			raiz = raiz -> sig;
+			dato = elimina -> info;
+			free(elimina);
+			return dato;
+		}
+		else
+		{
+			int pos = 1;
+			anterior = raiz;
+			while((pos != n - 1) )
+			{
+				anterior = anterior->sig;
+				pos++;
+			}
+			elimina = anterior ->sig;
+			siguiente = elimina->sig;
+			anterior ->sig = siguiente;
+			dato = elimina -> info;
+			free(elimina);
+			return dato;
+		}
+	} 
+	else
+	{
+		printf("Error - UnderFlow: No hay elementos en la lista. \n"); //  Error: Underflow!
+		system("Pause");
+		return;   
+	}
+}
+
 int main()
 {
 	imprimeLista();
@@ -150,7 +190,11 @@ int main()
 
 	imprimeLista();
 
-	insertn('k', 50);
+	insertn('k', 5000);
+
+	imprimeLista();
+
+	remueven(9);
 
 	imprimeLista();
 
