@@ -5,10 +5,10 @@
 #include <malloc.h>				//  Para la asignación (memory allocation) dinamica de memoria
 
 //  Prototipos					//  Avisarle al compilador que las funciones existen
-void insert(char dato);
-void insertn(char dato, int n);
-void insert1(char dato);
-void imprimeLista();
+//nodo *insert(nodo *raiz, char dato);
+//nodo *insertn(nodo *raiz, char dato, int n);
+//nodo *insert1(nodo *char dato);
+//void imprimeLista(nodo *raiz);
 
 struct Nodo 
 { 
@@ -18,9 +18,9 @@ struct Nodo
 
 typedef struct Nodo nodo;
 
-nodo *raiz = NULL;				// Creamos la lista vacia
+nodo *raiz = NULL;				// Creamos la lista vacia (Variable global)
 
-void insert(char dato)		// dato = 'c'
+nodo *insert(nodo *raiz, char dato)		// dato = 'c'
 {
 	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
 	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
@@ -28,7 +28,7 @@ void insert(char dato)		// dato = 'c'
 	{
 		printf("Error - Overflow: Ya no hay memoria disponible. \n");
 		system("Pause");
-		return;          
+		return NULL;          
 	}
 	nuevo -> info = dato;		//  Guardamos la información en el nodo
 	nuevo -> sig = NULL;		//  No hay nodo delante..
@@ -45,9 +45,10 @@ void insert(char dato)		// dato = 'c'
 		}
 		ultimo -> sig = nuevo;
 	}
+	return raiz;
 }
 
-void insertn(char dato, int n)		// dato = 'k' n = 5
+nodo *insertn(nodo *raiz, char dato, int n)		// dato = 'k' n = 5
 {
 	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
 	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
@@ -55,7 +56,7 @@ void insertn(char dato, int n)		// dato = 'k' n = 5
 	{
 		printf("Error - Overflow: Ya no hay memoria disponible. \n");
 		system("Pause");
-		return;          
+		return NULL;          
 	}
 	nuevo -> info = dato;		//  Guardamos la información en el nodo
 	nuevo -> sig = NULL;		//  No hay nodo delante..
@@ -83,10 +84,11 @@ void insertn(char dato, int n)		// dato = 'k' n = 5
 		anterior ->sig = nuevo;
 		nuevo ->sig = siguiente;
 	}
+	return raiz;
 }
 
 
-void insert1(char dato)		
+nodo *insert1(nodo *raiz, char dato)		
 {
 	nodo *nuevo = NULL;			// Apuntador auxiliar para crear el nuevo nodo
 	nuevo = (nodo *) malloc( sizeof(nodo) );  // Creamos el nuevo nodo
@@ -94,7 +96,7 @@ void insert1(char dato)
 	{
 		printf("Error - Overflow: Ya no hay memoria disponible. \n");
 		system("Pause");
-		return;          
+		return NULL;          
 	}
 	nuevo -> info = dato;		//  Guardamos la información en el nodo
 	nuevo -> sig = NULL;		//  No hay nodo delante..
@@ -108,9 +110,10 @@ void insert1(char dato)
 		raiz = nuevo;
 		raiz -> sig = ultimo;
 	}
+	return raiz;
 }
 
-void imprimeLista()
+void imprimeLista(nodo *raiz)
 {
 	nodo *recorre = raiz;
 	while( recorre != NULL)		//  ¿Es el ultimo nodo?
@@ -224,42 +227,45 @@ char remueve()
 
 int main()
 {
-	imprimeLista();
+	nodo *lista1 = NULL;
+	nodo *lista2 = NULL;
+	nodo *lista3 = NULL;
+	
+	lista1 = insert(lista1, 'R');
+	lista1 = insert(lista1, 'o');
+	lista1 = insert(lista1, 'b');
+	lista1 = insert(lista1, 'e');
+	lista1 = insert(lista1, 'r');
+	lista1 = insert(lista1, 't');
+	lista1 = insert(lista1, 'o');
 
-	insert('R');
-	insert('o');
-	insert('b');
-	insert('e');
-	insert('r');
-	insert('t');
-	insert('o');
+	printf("Lista1: ");
+	imprimeLista(lista1);
 
-	imprimeLista();
+	lista2 = insert1(lista2, 'S');
+	lista2 = insert1(lista2, 'a');
+	lista2 = insert1(lista2, 'l');
+	lista2 = insert1(lista2, 'a');
+	lista2 = insert1(lista2, 'z');
+	lista2 = insert1(lista2, 'a');
+	lista2 = insert1(lista2, 'r');
+	
+	printf("Lista2: ");
+	imprimeLista(lista2);
 
-	insert(' ');
-	insert('S');
-	insert('a');
-	insert('l');
-	insert('a');
-	insert('z');
-	insert('a');
-	insert('r');
+	//  insertn tiene un error, lo depuramos en clase.
 
-    imprimeLista();
-
-	insertn('m',2);
-
-	imprimeLista();
-
-	insertn('k', 5000);
-
-	imprimeLista();
-
-	printf("La letra que salió fue: %c\n", remueve() );
-	printf("La letra que salió fue: %c\n", remueve() );
-
-	imprimeLista();
-
+	//lista3 = insertn(lista3, 'M', 1);
+	//lista3 = insertn(lista3, 'a', 1);
+	//lista3 = insertn(lista3, 'r', 2);
+	//lista3 = insertn(lista3, 'q', 2);
+	//lista3 = insertn(lista3, 'u', 500);
+	//lista3 = insertn(lista3, 'e', 5);
+	//lista3 = insertn(lista3, 'z', 6);
+	//
+	//printf("Lista3: ");
+	//imprimeLista(lista3);
+	
 	system("pause");
 	return 1;
 }
