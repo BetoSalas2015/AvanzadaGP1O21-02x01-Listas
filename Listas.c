@@ -1,4 +1,4 @@
-// Sesion 32 - 28/10/2021
+// Sesion 33 - 03/11/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
@@ -163,7 +163,7 @@ char remueven(int n)
 	{
 		printf("Error - UnderFlow: No hay elementos en la lista. \n"); //  Error: Underflow!
 		system("Pause");
-		return;   
+		return ;   
 	}
 }
 
@@ -173,12 +173,46 @@ char remueve1()
 	{
 		nodo *siguiente = NULL, *anterior = NULL, *elimina = NULL;
 		char dato;
-
 		elimina = raiz;
 		raiz = raiz -> sig;
 		dato = elimina -> info;
 		free(elimina);
 		return dato;
+	} 
+	else
+	{
+		printf("Error - UnderFlow: No hay elementos en la lista. \n"); //  Error: Underflow!
+		system("Pause");
+		return;   
+	}
+}
+
+char remueve()
+{
+	if(raiz != NULL)
+	{
+		nodo *siguiente = NULL, *anterior = raiz, *elimina = NULL;
+		char dato;
+		if(anterior->sig == NULL)
+		{
+			raiz = raiz -> sig;
+			dato = anterior -> info;
+			free(anterior);
+			return dato;
+		}
+		else
+		{
+			elimina = anterior->sig;
+			while(elimina -> sig != NULL )
+			{
+				anterior = anterior->sig;
+				elimina = elimina -> sig;
+			}
+			anterior ->sig = NULL;			// anterior -> sig = elimina -> sig;
+			dato = elimina -> info;
+			free(elimina);
+			return dato;
+		}
 	} 
 	else
 	{
@@ -221,8 +255,8 @@ int main()
 
 	imprimeLista();
 
-	remueve1();
-	remueve1();
+	printf("La letra que salió fue: %c\n", remueve() );
+	printf("La letra que salió fue: %c\n", remueve() );
 
 	imprimeLista();
 
