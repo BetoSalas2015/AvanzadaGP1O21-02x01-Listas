@@ -1,4 +1,4 @@
-// Sesion 33 - 03/11/2021
+// Sesion 34 - 04/11/2021
 
 #include <stdio.h>				//   Para la I/O del programa (entrada / Salida)
 #include <stdlib.h>				//  Para las funcionesde utilería P.E. system();
@@ -63,6 +63,7 @@ nodo *insertn(nodo *raiz, char dato, int n)		// dato = 'k' n = 5
 	if( raiz == NULL )			//  ¿La lista está vacía?
 	{							//  Verdadero: la lista está vacia
 		raiz = nuevo;
+		return raiz;
 	}
 	if(n == 1)					//  Insertamos en la primera posición si n = 1
 	{
@@ -125,19 +126,18 @@ void imprimeLista(nodo *raiz)
 }
 
 
-char remueven(int n)
+nodo *remueven(nodo *raiz, int n, char *dato)
 {
 	if(raiz != NULL)
 	{
 		nodo *siguiente = NULL, *anterior = NULL, *elimina = NULL;
-		char dato;
 		if(n == 1)
 		{
 			elimina = raiz;
 			raiz = raiz -> sig;
-			dato = elimina -> info;
+			*dato = elimina -> info;
 			free(elimina);
-			return dato;
+			return raiz;
 		}
 		else
 		{
@@ -150,16 +150,16 @@ char remueven(int n)
 				if(anterior->sig == NULL )
 				{
 					printf("Error! No se puede eliminar el elemento %d\n", n);
-					return '\0';
+					return raiz;
 				}
 			}
 			
 			elimina = anterior ->sig;
 			siguiente = elimina->sig;
 			anterior ->sig = siguiente;
-			dato = elimina -> info;
+			*dato = elimina -> info;
 			free(elimina);
-			return dato;
+			return raiz;
 		}
 	} 
 	else
@@ -170,17 +170,16 @@ char remueven(int n)
 	}
 }
 
-char remueve1()
+nodo *remueve1(nodo *raiz, char *dato)
 {
 	if(raiz != NULL)
 	{
 		nodo *siguiente = NULL, *anterior = NULL, *elimina = NULL;
-		char dato;
 		elimina = raiz;
 		raiz = raiz -> sig;
-		dato = elimina -> info;
+		*dato = elimina -> info;
 		free(elimina);
-		return dato;
+		return raiz;
 	} 
 	else
 	{
@@ -190,18 +189,17 @@ char remueve1()
 	}
 }
 
-char remueve()
+nodo *remueve(nodo *raiz, char *dato)
 {
 	if(raiz != NULL)
 	{
 		nodo *siguiente = NULL, *anterior = raiz, *elimina = NULL;
-		char dato;
 		if(anterior->sig == NULL)
 		{
 			raiz = raiz -> sig;
-			dato = anterior -> info;
+			*dato = anterior -> info;
 			free(anterior);
-			return dato;
+			return raiz;
 		}
 		else
 		{
@@ -212,9 +210,9 @@ char remueve()
 				elimina = elimina -> sig;
 			}
 			anterior ->sig = NULL;			// anterior -> sig = elimina -> sig;
-			dato = elimina -> info;
+			*dato = elimina -> info;
 			free(elimina);
-			return dato;
+			return raiz;
 		}
 	} 
 	else
@@ -225,11 +223,29 @@ char remueve()
 	}
 }
 
+//  raiz -> a -> b -> c -> d -> NULL
+//  raiz2 -> d -> c -> b -> a -> NULL
+
+nodo *invierte(nodo *raiz)
+{
+
+}
+
+//  raiz -> a -> b -> c -> d -> NULL
+//  raiz2 -> 1 -> 2 -> 3 -> 4 -> NULL
+//  raiz3 -> a -> 1 -> b -> 2 -> c -> 3 -> d -> 4 -> NULL
+
+nodo *merge(nodo *raiz)
+{
+
+}
+
 int main()
 {
 	nodo *lista1 = NULL;
 	nodo *lista2 = NULL;
 	nodo *lista3 = NULL;
+	char car;
 	
 	lista1 = insert(lista1, 'R');
 	lista1 = insert(lista1, 'o');
@@ -253,18 +269,39 @@ int main()
 	printf("Lista2: ");
 	imprimeLista(lista2);
 
-	//  insertn tiene un error, lo depuramos en clase.
+	lista3 = insertn(lista3, 'M', 1);
+	lista3 = insertn(lista3, 'a', 1);
+	lista3 = insertn(lista3, 'r', 2);
+	lista3 = insertn(lista3, 'q', 2);
+	lista3 = insertn(lista3, 'u', 500);
+	lista3 = insertn(lista3, 'e', 5);
+	lista3 = insertn(lista3, 'z', 6);
+	
+	printf("Lista3: ");
+	imprimeLista(lista3);
 
-	//lista3 = insertn(lista3, 'M', 1);
-	//lista3 = insertn(lista3, 'a', 1);
-	//lista3 = insertn(lista3, 'r', 2);
-	//lista3 = insertn(lista3, 'q', 2);
-	//lista3 = insertn(lista3, 'u', 500);
-	//lista3 = insertn(lista3, 'e', 5);
-	//lista3 = insertn(lista3, 'z', 6);
-	//
-	//printf("Lista3: ");
-	//imprimeLista(lista3);
+	lista1 = remueve1(lista1, &car);
+	printf("EL char que salio de la lista fue: %c\n", car);
+
+	printf("Lista1: ");
+	imprimeLista(lista1);
+
+	lista1 = remueve1(lista1, &car);
+	printf("EL char que salio de la lista fue: %c\n", car);
+
+	printf("Lista1: ");
+	imprimeLista(lista1);
+
+
+	lista2 = remueve(lista2, &car);
+	lista2 = remueve(lista2, &car);
+	printf("Lista2: ");
+	imprimeLista(lista2);
+
+	lista3 = remueven(lista3, 25, &car);
+	lista3 = remueven(lista3, 44, &car);
+	printf("Lista3: ");
+	imprimeLista(lista3);
 	
 	system("pause");
 	return 1;
